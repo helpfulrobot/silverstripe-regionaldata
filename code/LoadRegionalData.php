@@ -1,28 +1,31 @@
 <?php
 
-class LoadRegionalData extends BuildTask{
+class LoadRegionalData extends BuildTask
+{
 
-	static $countries_datafile = "regionaldata/data/cdh_countries_10_29_2012.txt";
-	static $subdivisions_datafile = "regionaldata/data/cdh_subdivisions_10_29_2012.txt";
-	static $delete_existing_records = false;
+    public static $countries_datafile = "regionaldata/data/cdh_countries_10_29_2012.txt";
+    public static $subdivisions_datafile = "regionaldata/data/cdh_subdivisions_10_29_2012.txt";
+    public static $delete_existing_records = false;
 
-	function run($request){
-		$this->loadCountries();
-		$this->loadSubdivisions();
-	}
+    public function run($request)
+    {
+        $this->loadCountries();
+        $this->loadSubdivisions();
+    }
 
-	function loadCountries(){
-		$loader = new CountriesBulkLoader("Country");
-		$loader->deleteExistingRecords = self::$delete_existing_records;
-		$results = $loader->load(self::$countries_datafile);
-		echo "loaded countries.";
-	}
+    public function loadCountries()
+    {
+        $loader = new CountriesBulkLoader("Country");
+        $loader->deleteExistingRecords = self::$delete_existing_records;
+        $results = $loader->load(self::$countries_datafile);
+        echo "loaded countries.";
+    }
 
-	function loadSubdivisions(){
-		$loader = new CountrySubdivisionsBulkLoader("CountrySubdivison");
-		$loader->deleteExistingRecords = self::$delete_existing_records;
-		$results = $loader->load(self::$subdivisions_datafile);
-		echo "loaded subdivisions.";
-	}
-
+    public function loadSubdivisions()
+    {
+        $loader = new CountrySubdivisionsBulkLoader("CountrySubdivison");
+        $loader->deleteExistingRecords = self::$delete_existing_records;
+        $results = $loader->load(self::$subdivisions_datafile);
+        echo "loaded subdivisions.";
+    }
 }
